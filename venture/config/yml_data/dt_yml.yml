@@ -1,0 +1,12 @@
+#LOGIN
+usuario: 'JOSY'
+password: 'Test1234'
+lbl_pop_up_login_exitoso: 'Login Exitoso'
+lbl_pop_up_login_fail: 'Login Incorrecto'
+
+#PUSH NOTIFICATION
+lbl_titulo_notificacion_app_demo: 'APP DEMO'
+lbl_msj_notificacion_app_demo: 'Nofificación para APP DEMO - Automationzación de pruebas mobiles'
+
+
+#NUEVO REGISTRO

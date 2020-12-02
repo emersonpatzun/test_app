@@ -1,0 +1,35 @@
+Usage: calabash-ios <command-name> [parameters]
+
+  Commands:
+
+  version
+      Print the version of the Calabash iOS gem.
+
+  gen
+      Creates a skeleton features dir. This is usually used once when
+      setting up calabash to ensure that the features folder contains
+      the right step definitions and environment to run with cucumber.
+
+  console
+      Starts an interactive console to interact with your app via Calabash.
+      If there is a .irbrc in your local directory, the IRB will load that file.
+      To share an .irbrc across projects, use the CALABASH_IRBRC environment
+      variable.
+
+  download
+      Copies current compatible version of calabash.framework to your project.
+      It should be run from a directory containing an Xcode project,
+
+  check { path/to/My.app | path/to/My.ipa }
+      Check whether an app or ipa is linked with calabash.framework
+
+  sim locale [lang code] [locale code]
+      Changes the regional settings.  For usage information, run:
+      $ calabash-ios sim locale
+
+  sim reset
+      Reset the Content & Settings of all iOS Simulators
+
+  setup [path]? (EXPERIMENTAL)
+      https://github.com/calabash/calabash-ios/wiki/calabash-ios-setup
+

@@ -1,0 +1,8 @@
+# config/cucumber.yml
+
+################################################################################################################
+#PROFILES
+################################################################################################################
+adr: --tag @regresion PLATFORM=android -r features/android/support -r features/android -r features/step_definitions -r features/android/pages
+adr2: --tag @regresion --tag @p0 PLATFORM=android -r features/android/support -r features/android -r features/step_definitions -r features/android/pages
+
