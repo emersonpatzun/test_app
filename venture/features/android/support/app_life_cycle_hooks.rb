@@ -16,11 +16,11 @@ Before do |scenario|
   #clear_app_data
   #puts "CLEAR APP DATA"
   ##clear_cache_mobile_app 'com.mate_app'
-  ##puts "CLEAR APP DATA MATE"
-  #reinstall_test_server
-  #puts "REINSTALL TEST SERVER"
-  #start_test_server_in_background
-  #puts "START TEST SERVER"
+  #puts "CLEAR APP DATA MATE"
+  reinstall_test_server
+  puts "REINSTALL TEST SERVER"
+  start_test_server_in_background
+  puts "START TEST SERVER"
 end
 
 

@@ -79,23 +79,23 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="calabash-android (vbundled(0.9.9)) [path][gem]" type="rubylib">
+      <library name="calabash-android (vbundled(0.9.12)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
         </properties>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.9/bin" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.9/lib" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.9/features-skeleton" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.12/bin" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.12/lib" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.12/features-skeleton" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.9/bin" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.9/lib" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.9/features-skeleton" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.12/bin" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.12/lib" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.12/features-skeleton" />
         </SOURCES>
         <excluded>
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.9/bin" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.9/features-skeleton" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.12/bin" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/calabash-android-0.9.12/features-skeleton" />
         </excluded>
       </library>
     </orderEntry>
@@ -705,23 +705,23 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="rubyzip (vbundled(1.2.1)) [path][gem]" type="rubylib">
+      <library name="rubyzip (vbundled(1.2.3)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
         </properties>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.1/lib" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.1/test" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.1/samples" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.3/lib" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.3/test" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.3/samples" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.1/lib" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.1/test" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.1/samples" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.3/lib" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.3/test" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.3/samples" />
         </SOURCES>
         <excluded>
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.1/test" />
-          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.1/samples" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.3/test" />
+          <root url="file://$MODULE_DIR$/bundle/ruby/2.7.0/gems/rubyzip-1.2.3/samples" />
         </excluded>
       </library>
     </orderEntry>
