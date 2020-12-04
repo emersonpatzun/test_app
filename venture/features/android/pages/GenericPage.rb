@@ -15,7 +15,7 @@ class GenericPage < Calabash::ABase
   # ACCIONES
   #############################################################################
 
-  def abrir_app
+  def open_app
     true
   end
 

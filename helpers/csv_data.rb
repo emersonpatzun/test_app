@@ -1,6 +1,5 @@
 #####################################################
-#Autor: Testingit                                   #
-#Descripcion:  Helper para obtener los datos del csv#
+#Descripcion:  Helper to get the CSV data           #
 #####################################################
 
 require 'fileutils'
@@ -11,13 +10,13 @@ require 'csv'
 # READ CSV DATA
 #####################################################
 
-#Metodo obtener la data de un csv en hash map
+#Method to get the data from a csv in hash map
 # @params:
-#   :csv_data nobre del archivo csv que se va cargar
+#   :csv_data name of the CSV file to upload
 def get_csv_data(csv_data)
   csv_file = nil
 
-  #obtiene el path y nombre del archivo csv
+  #Get the path and name of the CSV file
   if csv_data.to_s.include? '.csv'
     csv_file =  File.join(File.dirname(__FILE__), "../venture/config/csv_data/#{csv_data}")
   elsif (
@@ -39,7 +38,7 @@ end
 def exportHashToCsv(data, file)
 
   csv_file = nil
-  #obtiene el path y nombre del archivo csv
+  #Get the path and name of the CSV file
   if file.to_s.include? '.csv'
     csv_file =  File.join(File.dirname(__FILE__), "../venture/config/csv_data/#{file}")
   elsif (
@@ -62,12 +61,12 @@ end
 # FILTER CSV DATA (HASH MAP FILTER)
 #####################################################
 
-# Permite filtrar un hash map proveniente de csv data
+# Allows you to filter a hash map from csv data
 # @params
-#   :dt_filters String, filtros a aplicar al datapool csv. los filtros a columnas se delimitan por ',' (coma)
-#       - operadores: '=, !=, >, >=, <, <=, contains'
-#       - ejemplo: 'columna1 = valor, columna2 != valor, columna3 > valor, columna4 <= valor, columna5 contains valor'
-#   :csv ARRAY HASH MAP, hash con data de 1 csv
+#   :dt_filters String, filters to apply to the csv data pool. column filters are delimited by ',' (comma)
+#       - operators: '=, !=, >, >=, <, <=, contains'
+#       - example: 'column1 = value, column2 != value, column3 > value, column4 <= value, column5 contains value'
+#   :csv ARRAY HASH MAP, Hash with data of 1 csv
 def get_data_by_filters(filters, csv)
 
   filters_a = filters.to_s.split(',')
@@ -78,12 +77,12 @@ def get_data_by_filters(filters, csv)
 
     filter = filters_a[i].to_s.downcase.strip
     filter_data = get_filter_data filter
-    #se limipia el array
+    #The array is cleaned
     data_filtered = Array.new
 
     csv_tmp.each_with_index do |(record), index|
 
-      #agregar headeres del csv
+      #Add csv headers
       if index == 0
         #data_filtered.push(record)
       end
@@ -121,7 +120,7 @@ def get_data_by_filters(filters, csv)
 
     end
 
-    #Se agregan los datos del 1er filtro a 'csv_tmp' para ir reduciendo los registros filtrados
+    #The data of the 1st filter is added to 'csv_tmp' to reduce the filtered records
     csv_tmp = data_filtered
 
   end

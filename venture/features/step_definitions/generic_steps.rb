@@ -7,9 +7,9 @@ require_relative '../../../helpers/generic.rb'
 # STEPS DEFINITIONS
 #*****************************************************************************
 
-When(/^Abro la aplicacion$/) do
+Given(/^I open the application$/) do
   @generic_page = GenericPage.new(self)
-  @generic_page.abrir_app
+  @generic_page.open_app
 end
 
 When(/^Tomo screenshot$/) do

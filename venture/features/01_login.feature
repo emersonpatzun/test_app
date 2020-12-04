@@ -1,13 +1,14 @@
-# language: es
 # encoding: utf-8
-Característica: LOGIN
-  - Como usario valido debo poder hacer login
-  - Como usuario invalido no debo poder hacer login
-  - No debo poder hacer login con credenciales invalidas
+
+Feature: LOGIN
+  - As a valid user you must be able to login
+  - As an invalid user I must not be able to login
+  - I must not be able to login with invalid credentials
 
   @regresion @login_01
-  Escenario: login_01 - LOGIN EXITOSO
-    Dado Abro la aplicacion
-    Entonces Se muestra la pagina de 'Login'
-    Cuando Hago login como "usuario valido"
-    Entonces Se muestra el popup de 'Login exitoso'
+  Scenario: login_01 - LOGIN SUCCESSFUL
+    Given I open the application
+    Then the 'Login' page is displayed
+    When I login as "valid user"
+    Then The 'Login Successful' popup is displayed
+

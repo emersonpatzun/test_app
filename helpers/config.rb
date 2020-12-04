@@ -1,5 +1,4 @@
 #####################################################
-#Autor: BICHO, TETE
 #Descripcion:  Helper de configuracion general
 #####################################################
 
@@ -8,20 +7,20 @@ class Config
   #************************************************************************************
   # VARIABLES
   #************************************************************************************
-  #Driver de la ejecucion selenium / chromedriver / appium
+  #Selenium execution driver / chromedriver / appium
   @driver = ENV['DRIVER'].nil? ? 'chrome' : ENV['DRIVER'].to_s.downcase.strip
-  #UUID del dispositivo
+  #device UUID
   @device = ENV['DEVICE'].nil? ? 'ANY_DEVICE' : ENV['DEVICE'].to_s.strip
-  #Nombre del dispositivo
+  #Device Name
   @device_name = ENV['DEVICE_NAME'].nil? ? 'ANY_DEVICE_NAME' : ENV['DEVICE_NAME'].to_s.downcase.strip
-  #Fecha de ejecucion este valor podria ser usado para crear la carpeta que contenga reporte y evidencia.
+  #Execution date this value can be used to create the folder containing the report and evidence
   @exec_date = Time.now.strftime("%Y%m%d")
-  #Hora de ejecucion este valor podria ser usado para crear la carpeta que contenga reporte y evidencia.
+  #Execution time this value could be used to create the folder containing report and evidence.
   @exec_time = Time.now.strftime("%H%M")
-  #obtiene el directorio de resultados seteado como variable de entorno
-  #   de no existir la variable se usa un directorio default
+  #Gets the results directory set as an environment variable
+  #If the variable does not exist, a default directory is used
   @path_results = ENV['PATH_RESULTS'].nil? ? "evidencia/#{@exec_date}/#{@exec_time}" : "#{ENV['PATH_RESULTS'].to_s.downcase.strip}"
-  #obtiene el directorio para almacenar screenshots
+  #Gets the directory to store screenshots
   @current_feature = nil
   @current_scenario = nil
   @path_evidencia = "#{@path_results}/evidencia"

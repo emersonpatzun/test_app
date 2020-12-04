@@ -25,3 +25,8 @@ reinstall_test_server
 reinstall_apps
 start_test_server_in_background
 exit
+reinstall_test_server
+reinstall_apps
+start_test_server_in_background
+start_test_server_in_background
+start_test_server_in_background

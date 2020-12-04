@@ -63,10 +63,10 @@ end
 
 
 ##################################################################################
-### EVIDENCIA
+### EVIDENCE
 ##################################################################################
 
-#Método para guardar la evidencia de ejecucion al momento de invocar este metodo, en este punto toda la evidencia es pass
+#Method to save the execution evidence when invoking this method, at this point all the evidence is pass
 def save_evidence_execution
   begin
     feature_name = special_chars_replace(Config.current_feature.to_s.downcase.strip)
@@ -84,7 +84,7 @@ def save_evidence_execution
   end
 end
 
-#Método para guardar la evidencia de ejecucion al momento de invocar este metodo, en este punto toda la evidencia es pass
+#Method to save the execution evidence when invoking this method, at this point all the evidence is pass
 def save_evidence_execution_fail
   begin
     feature_name = special_chars_replace(Config.current_feature.to_s.downcase.strip)
@@ -105,21 +105,21 @@ end
 
 
 ##################################################################################
-### ACCIONES - UI ELEMENTS
+### ACTIONS - UI ELEMENTS
 ##################################################################################
 
 
-#Metodo para validar si un elemento existe
+#Method to validate if an element exists
 # @params
-# * :uielement string query que identifica un mobile element
-# * :timeout tiempo maximo en segundos para esperar que exista el elemento. si no se manda to, el default es 1s
-# * :msj_error en caso de un error mensaje a mostrar
+# * :uielement string query that identifies a mobile element
+# * :timeout maximum time in seconds to wait for the element to exist. if to is not sent, the default is 1s
+# * :msj_error in case of an error message to display
 # @return
-# * :Boolean true => si existe el elemento, EXCEPTION => si no se encontro el elemento en el tiempo de espera "timeout"
+# * :Boolean true => if the element exists, EXCEPTION => if the item was not found within the timeout "timeout"
 def assert_for_uielement_exist(uielement, timeout = nil, msj_error = nil)
   element = uielement.to_s.strip
   result = false
-  #si no se manda timeout por default se envia 5
+  #if timeout is not sent by default, 5 is sent
   timeout = timeout.nil? ? 1 : timeout.to_i
   start = Time.new
 
@@ -140,17 +140,17 @@ def assert_for_uielement_exist(uielement, timeout = nil, msj_error = nil)
 end
 
 
-#Método que espera que exista un elemento. Si no existe se retorna el el error
+#Method that expects an element to exist. If it does not exist, the error is returned
 # @params
-# * :element string query que identifica un mobile element
-# * :timeout tiempo máximo de espera
-# * :msj_error en caso de un error mensaje a mostrar en la consola
+# * :element string query that identifies a mobile element
+# * :timeout maximum waiting time
+# * :msj_error in case of an error message to be displayed on the console
 # @return
-# * :Boolean true => si existe el elemento, false => si no se encontro el elemento en el tiempo de espera "timeout"
+# * :Boolean true => if the item exists, false => if the item was not found in the timeout "timeout"
 def verity_for_uielement_exist(uielement, timeout = nil, msj_error = nil)
   element = uielement.to_s.strip
   result = false
-  #si no se manda timeout por default se envia 5
+  #If timeout is not sent by default, 5 is sent
   timeout = timeout.nil? ? 1 : timeout.to_i
   start = Time.new
 

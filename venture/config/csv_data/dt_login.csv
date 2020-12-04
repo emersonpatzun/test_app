@@ -1,4 +1,4 @@
-id_tc,usuario,password,tipo_usuario
-F05_TC01,JOSY,Test1234,usuario valido
-F05_TC02,USUARIO,Test1234,usuario incorrecto
-F05_TC03,JOSY,1234,password incorrecto
+id_tc,user,password,user_type
+F05_TC01,JOSY,Test1234,valid user
+F05_TC02,USUARIO,Test1234,invalid user
+F05_TC03,JOSY,1234,wrong password

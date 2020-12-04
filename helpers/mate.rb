@@ -19,38 +19,32 @@
 
 #**********************************************
 
-
 require 'nokogiri'
 
-
-#**********************************************
-#**********************************************
 #**********************************************
 # ADB RUN COMMANDS
 #**********************************************
-#**********************************************
-#**********************************************
 
-#Método para ejecutar comando ADB dentro del device (adb shell)
+#Method to execute ADB command inside device (adb shell)
 # @params
-# * :cmd comando de shell (cmd, shell, etc)
+# * :cmd shell command (cmd, shell, etc)
 # @return
-# * :Hash hash con outs de la terminal => {:stdout => stdout, :stderr => stderr, :status => status}
+# * :Hash hash with terminal outs => {:stdout => stdout, :stderr => stderr, :status => status}
 def adb_exec(cmd)
 
   require 'open3'
 
   if !ENV['DEVICE'].nil?
-    #si tenemos la 'variable de entorno DEVICE ' entonces ejecutaremos ADB SHELL desde consola
-    #   ESTO EN CASO DE NO ESTAR USANDO CALABASH
+    #if we have the 'DEVICE environment variable' then we will execute ADB SHELL from console
+    #   THIS IN CASE YOU ARE NOT USING CALABASH
     adb_cmd = "adb -s #{ENV['DEVICE'].to_s.strip} #{cmd}"
 
   elsif !default_device.nil?
-    #si default device no es nulo, entonces se esta usando 'CALABASH'
+    #if default device is not null, then it is being used 'CALABASH'
     adb_cmd = "#{default_device.adb_command} #{cmd}"
 
   else
-    raise "Se necesita definir la VARIABLE DE ENTORNO 'DEVICE'. O ejecutar desde 'CALABASH CONSOLE'"
+    raise "You need to define the ENVIRONMENT VARIABLE 'DEVICE'. Or run from 'CALABASH CONSOLE'"
 
   end
 
@@ -65,20 +59,15 @@ def adb_exec(cmd)
 
 end
 
-
 #**********************************************
-#**********************************************
-#**********************************************
-# OBTENER DATOS DE LOS NODOS Y ELEMENTOS MOBILE
-#**********************************************
-#**********************************************
+# GET DATA FROM MOBILE NODES AND ELEMENTS
 #**********************************************
 
-#REGRESA EL ARBOL DE ELEMENTOS DE LA APP
+#RETURN THE APP ELEMENTS TREE
 # @params
-# * :cmd comando de shell (cmd, shell, etc)
+# * :cmd shell command (cmd, shell, etc)
 # @return
-# * :Hash hash con outs de la terminal => {:stdout => stdout, :stderr => stderr, :status => status}
+# * :Hash hash with terminal outs => {:stdout => stdout, :stderr => stderr, :status => status}
 def uiautomator_dump
   stdout, stderr, status = adb_exec('shell uiautomator dump')
   unless /dumped to: (?<file>\S*)/ =~ stdout
@@ -89,12 +78,12 @@ def uiautomator_dump
 end
 
 
-#Extrae las cordenadas x1, y1, x2, y2 del elemento
-#   ACTUALMENTE SOLO TRAE LAS DEL 1ER ELEMENTO DE LA BUSQUEDA
+#Extract the x1, y1, x2, y2 coordinates of the element
+#   CURRENTLY IT ONLY BRINGS THE 1ST ELEMENT OF THE SEARCH
 # @params
 # * :set XML PARSE
 # @return
-# * :matches los 4 coordenadas |x1, y1, x2, y2|
+# * :matches the 4 coordinates |x1, y1, x2, y2|
 def extract_integer_bounds(set)
   return nil if set.empty?
   match = (set.attr('bounds').to_s.match(/\[(\d+),(\d+)\]\[(\d+),(\d+)\]/))
@@ -103,11 +92,11 @@ def extract_integer_bounds(set)
 end
 
 
-#Método para obtener 1 elemento mobile apartir de su xpath
+#Method to get 1 mobile element from its xpath
 # @params
-# * :xpath xpath que identifica y busca al mobile element
+# * :xpath xpath that identifies and searches for the mobile element
 # @return
-# * :XML string con nodo xml del elemento encontrado
+# * :XML string with XML node of the found element
 def get_mobile_element(xpath)
 
   xpath = xpath.to_s.force_encoding(Encoding::UTF_8)
@@ -123,12 +112,12 @@ def get_mobile_element(xpath)
 end
 
 
-#Método para obtener 1 atributo de un mobile element apartir de su xpath
+# Method to get 1 attribute of a mobile element from its xpath
 # @params
-# * :xpath xpath que identifica y busca al mobile element
-# * :attribute atributo que se desea recuperar
+# * :xpath xpath that identifies and searches for the mobile element
+# * :attribute attribute to retrieve
 # @return
-# * :STRING string el atributo a recuperar
+# * :STRING string the attribute to retrieve
 def get_mobile_element_attribute(xpath, attribute)
 
   stdout, _stderr, _status = uiautomator_dump
@@ -144,11 +133,11 @@ def get_mobile_element_attribute(xpath, attribute)
 
 end
 
-#Método que recupera las coordenadas del elemento |x1, y1, x2, y2|
+#Method that retrieves the coordinates of the element |x1, y1, x2, y2|
 # @params
-# * :elemen XML node del mobile element
+# * :elemen XML node of the mobile element
 # @return
-# * :bounds coordenadas del elemento |x1, y1, x2, y2|. Si no se puede extraer las coordenadas se retora "NIL"
+# * :bounds element coordinates | x1, y1, x2, y2 |. If the coordinates cannot be extracted, "NIL" is returned.
 def get_bounds_from_element(element)
 
   if (bounds = extract_integer_bounds(element))
@@ -176,7 +165,7 @@ def bounds_from_xpath(xpath)
 end
 
 # @deprecated Please send {xpath} directly
-#Retorna el xpath del elemento a buscar
+#Returns the xpath of the element to search
 def xpath_for_full_path_texts(params)
   texts = params.keys.grep(/^notification.full./)
   clauses = texts.collect { |k| "./node/node[@text='#{params[k]}']" }
@@ -184,48 +173,42 @@ def xpath_for_full_path_texts(params)
   "//node[#{clauses.join('][')}]"
 end
 
-
-#**********************************************
-#**********************************************
 #**********************************************
 # MOBILE ELEMENTS - ACTIONS BASE
 #**********************************************
-#**********************************************
-#**********************************************
 
-
-#ELIMINA EL CACHE DE UN APP POR MEDIO DEL "NAME PACKAGE"
+#DELETE THE CACHE OF AN APP THROUGH THE "NAME PACKAGE"
 # @params
-# * :app_package nombre dle paquete del app
+# * :app_package app package name
 def clear_cache_mobile_app(app_package)
   stdout, stderr, status = adb_exec("shell pm clear #{app_package.to_s.strip}")
   puts "MATE => CLEAR CACHE => TRUE"
 
 rescue Exception => e
-  puts("clear_cache_mobile_app => Error al limpiar cache de la app con package: #{app_package}.
+  puts("clear_cache_mobile_app => Error clearing app cache with package: #{app_package}.
           \nException => #{e.message}
         \nConsole output => #{[stdout, stderr, status]}")
 end
 
-#LEVANTA UN APP POR MEDIO DEL "NAME PACKAGE"
+#RAISE AN APP THROUGH THE "NAME PACKAGE"
 # @params
-# * :app_package nombre dle paquete del app
+# * :app_package app package name
 def lauch_mobile_app(app_package)
   stdout, stderr, status = adb_exec("shell monkey -p #{app_package.to_s.strip} -c android.intent.category.LAUNCHER 1")
 rescue Exception => e
-  raise("lauch_mobile_app => Error al lanzar la app con package: #{app_package}.
+  raise("lauch_mobile_app => Error launching the app with package: #{app_package}.
           \nException => #{e.message}
         \nConsole output => #{[stdout, stderr, status]}")
 end
 
-#Método tap en un mobile element
+#Tap method on a mobile element
 # @params
-# * :xpath xpath que identifica y busca al mobile element
+# * :xpath xpath that identifies and searches for the mobile element
 # @return
 # * :Boolean
 def tap_element(xpath)
 
-  #obtener 'mobile element' form xpath
+  #get 'mobile element' form xpath
   mobile_element = get_mobile_element xpath
 
   if mobile_element.nil? or mobile_element.to_s.empty?
@@ -253,14 +236,14 @@ def tap_element(xpath)
 end
 
 
-#Método se hace tap y luego se envia text a un mobile element
+#Method is tapped and then text is sent to a mobile element
 # @params
-# * :xpath xpath que identifica y busca al mobile element
+# * :xpath xpath that identifies and searches for the mobile element
 # @return
 # * :Boolean
 def set_text_element(xpath, text)
 
-  #obtener 'mobile element' form xpath
+  #get 'mobile element' form xpath
   mobile_element = get_mobile_element xpath
   result = false
 
@@ -272,18 +255,18 @@ def set_text_element(xpath, text)
 
   begin
 
-    #MANEJO DEL TEXTO - REMPLAZAR CARACTERES Y ADECUARLO PARA ENVIARLO A ADB
+    #TEXT HANDLING - REPLACE CHARACTERS AND ADEQUATE IT TO SEND TO ADB
     text = text.to_s.strip.gsub( ' ', '%s' ) #.to_s.encode(Encoding::UTF8_SoftBank)
     text = text.to_s.strip.gsub( '"', '\"' )
 
-    #LIMPIAR PREVIAMENTE INPUT
+    #CLEAN INPUT PREVIOUSLY
     #adb_exec("shell input keyevent KEYCODE_MOVE_END")
     #for i in 0..250
       #adb_exec("shell input keyevent --longpress KEYCODE_DEL")
       #adb_exec("shell input keyevent KEYCODE_DEL")
     #end
 
-    #escribir texto en input
+    #write text to input
     #puts "text => #{text}"
     adb_exec("shell input text '#{text}'")
     result = true
@@ -298,15 +281,15 @@ def set_text_element(xpath, text)
 end
 
 
-#Método para hacer swipe a l aderecha sobre un mobile element
-#   Ej. al cerrar/ignorar notificaciones sobre la barra de notificaciones
+#Method to swipe to the right on a mobile element
+#   Ej. when closing / ignoring notifications on the notification bar
 # @params
-# * :xpath xpath que identifica y busca al mobile element
+# * :xpath xpath that identifies and searches for the mobile element
 # @return
 # * :Boolean
 def swipe_element_to_rigth(xpath)
 
-  #obtener 'mobile element' form xpath
+  #get 'mobile element' form xpath
   mobile_element = get_mobile_element xpath
 
   if mobile_element.nil? or mobile_element.to_s.empty?
@@ -333,15 +316,15 @@ def swipe_element_to_rigth(xpath)
 end
 
 
-#Método para hacer swipe a la izquierda sobre un mobile element
-#   Ej. al cerrar/ignorar notificaciones sobre la barra de notificaciones
+#Method to swipe left on a mobile element
+#   Ej. when closing / ignoring notifications on the notification bar
 # @params
-# * :xpath xpath que identifica y busca al mobile element
+# * :xpath xpath that identifies and searches for the mobile element
 # @return
 # * :Boolean
 def swipe_element_to_left(xpath)
 
-  #obtener 'mobile element' form xpath
+  #get 'mobile element' form xpath
   mobile_element = get_mobile_element xpath
 
   if mobile_element.nil? or mobile_element.to_s.empty?
@@ -368,14 +351,14 @@ def swipe_element_to_left(xpath)
 end
 
 
-#Método para hacer scroll down en una pantalla
+#Method to scroll down a screen
 # @params
-# * :drag_to cantidad de points a desplazar
+# * :drag_to amount of points to move
 # @return
 # * :Boolean
 def scroll_to_down(drag_to = nil)
 
-  #obtener 'mobile element' form xpath
+  #get 'mobile element' form xpath
   xpath = "(//node[./node/node])[last()]"
   drag = drag_to.nil? ? 100 : drag_to.to_s.to_i
 
@@ -415,14 +398,14 @@ def scroll_to_down(drag_to = nil)
 end
 
 
-#Método para hacer scroll up en una pantalla
+#Method to scroll up on a screen
 # @params
-# * :drag_to cantidad de points a desplazar
+# * :drag_to amount of points to move
 # @return
 # * :Boolean
 def scroll_to_up(drag_to = nil)
 
-  #obtener 'mobile element' form xpath
+  #get 'mobile element' form xpath
   xpath = "(//node[./node/node])[1]"
   drag = drag_to.nil? ? 100 : drag_to.to_s.to_i
 
@@ -454,13 +437,13 @@ def scroll_to_up(drag_to = nil)
 end
 
 
-#Método que realiza scroll down hasta que encuentre un elemento
+#Method that scrolls down until it finds an element
 # @params
-# * :xpath_element xpath que identifica y busca al mobile element
-# * :intentos numero maximo de intentos de hacer scrolls hasta encontrar el elemento
-# * :scroll_size tamaño del scroll a enviar. ej 100, 500, etc
+# * :xpath_element xpath that identifies and searches for the mobile element
+# * :intentos maximum number of attempts to scroll until the element is found
+# * :scroll_size size of the scroll to send. eg 100, 500, etc
 # @return
-# * :Boolean True si el elemento es encontrado, False si el elemento no se encontro despues de N scrolls
+# * :Boolean True if the element is found, False if the element was not found after N scrolls
 def scroll_down_for_element_exists(xpath, intentos = nil, scroll_size = nil)
 
   result = false
@@ -482,12 +465,12 @@ def scroll_down_for_element_exists(xpath, intentos = nil, scroll_size = nil)
 end
 
 
-#Método que realiza scroll up hasta que encuentre un elemento
+#Method that scrolls up until it finds an element
 # @params
-# * :xpath_element xpath que identifica y busca al mobile element
-# * :intentos numero maximo de intentos de hacer scrolls hasta encontrar el elemento
+# * :xpath_element xpath that identifies and searches for the mobile element
+# * :intentos maximum number of attempts to scroll until the element is found
 # @return
-# * :Boolean True si el elemento es encontrado, False si el elemento no se encontro despues de N scrolls
+# * :Boolean True if the element is found, False if the element was not found after N scrolls
 def scroll_up_for_element_exists(xpath, intentos = nil, scroll_size = nil)
 
   result = false
@@ -509,11 +492,11 @@ def scroll_up_for_element_exists(xpath, intentos = nil, scroll_size = nil)
 end
 
 
-#Método para arrastrar un elemento hacia donde esta otro elemento
+#Method to drag an element to where another element is
 # @params
-# * :xpath_element_origin xpath que identifica y busca al mobile element origen
-# * :xpath_element_fate xpath que identifica y busca al mobile element destino
-# * :duration duracion en segundos que tarda el swipe press
+# * :xpath_element_origin xpath that identifies and searches for the source mobile element
+# * :xpath_element_fate xpath that identifies and searches for the destination mobile element
+# * :duration duration in seconds that the swipe press takes
 # @return
 # * :Boolean
 def drag_element_to_element(xpath_element_origin, xpath_element_fate, duration = nil)
@@ -564,12 +547,12 @@ def drag_element_to_element(xpath_element_origin, xpath_element_fate, duration =
 end
 
 
-#Método para arrastrar un elemento hacia un destino X, Y
+#Method to drag an item to an X, Y destination
 # @params
-# * :xpath_element_origin xpath que identifica y busca al mobile element origen
-# * :x_fate coordenada de destino X
-# * :y_fate coordenada de destino Y
-# * :duration duracion en milisegundos que tarda el swipe press
+# * :xpath_element_origin xpath that identifies and searches for the source mobile element
+# * :x_fate destination coordinate X
+# * :y_fate destination coordinate Y
+# * :duration duration in milliseconds that the swipe press takes
 # @return
 # * :Boolean
 def drag_element_to(xpath_element_origin, x_fate, y_fate, duration = nil)
@@ -611,14 +594,14 @@ def drag_element_to(xpath_element_origin, x_fate, y_fate, duration = nil)
 
 end
 
-#Obtiene el tamaño del display del dispositivo
+#Get the device display size
 def get_screen_size
   #obtenemos el tamaño de la ventana
   data_size_device = adb_exec("shell wm size")
   size = Array.new
   size_device = { :width => nil, :height => nil }
 
-#escaneamos los numeros existentes y los almacenamos en un array
+#we scan the existing numbers and store them in an array
   for i in 0..(data_size_device.size - 1)
     p data_size_device[i].to_s
     if data_size_device[i].to_s.include? 'size'
@@ -632,7 +615,7 @@ def get_screen_size
   size_device = { :width => size[0].to_s.to_i, :height => size[1].to_s.to_i }
 
 rescue Exception => e
-  raise "get_screen_size => No fue posible obtener el tamaño de la pantalla.\nException => #{e.message}"
+  raise "get_screen_size => Could not get screen size.\nException => #{e.message}"
 
 end
 
@@ -640,9 +623,9 @@ end
 # SEND KEY EVENTS
 #**********************************************
 
-#Método para presionar keys del teclado
+#Method for pressing keyboard keys
 # @params
-# * :keyevent KEYCODE/NUM. del keyboard a enviar
+# * :keyevent KEYCODE/NUM. keyboard to send
 def keyboard_send_keyevent(keyevent)
   adb_exec("shell input keyevent #{keyevent}")
 end
@@ -651,7 +634,7 @@ end
 # NOTIFICATIONS BAR
 #**********************************************
 
-#Método que abre la barra de notificaciones de android
+#Method that opens the android notification bar
 def open_notifications
 
   begin
@@ -664,26 +647,22 @@ def open_notifications
 
 end
 
-#Método que cierra la barra de notificaciones de android
+#Method that opens the android notification bar
 def close_notifications_bar
   #exec_adb("shell service call statusbar 2")
   adb_exec("shell cmd statusbar collapse")
 end
 
-
-#**********************************************
-#**********************************************
 #**********************************************
 # MOBILE ELEMENTS - VERIFYS/ASSERTS
 #**********************************************
-#**********************************************
-#**********************************************
 
-#Método para validar si un elemento mobile existe
+#Method to validate if a mobile element exists
 # @params
-# * :xpath_element xpath que identifica y busca al mobile element
+# * :xpath_element xpath that identifies and searches for the mobile element
 # @return
-# * :Boolean True si el elemento existe, False si el elemento no existe
+# * :Boolean True if the element exists, False if the element does not exist
+
 def mobile_element_exists(xpath)
 
   result = true
@@ -706,12 +685,12 @@ def mobile_element_exists(xpath)
 end
 
 
-#Método que espera un timeout hasta que un elemento mobile existe
+#Method that waits for a timeout until a mobile element exists
 # @params
-# * :xpath_element xpath que identifica y busca al mobile element
-# * :timeout tiempo en segundos para esperar el mobile element
+# * :xpath_element xpath that identifies and searches for the mobile element
+# * :timeout xpath that identifies and searches for the mobile element
 # @return
-# * :Boolean True si el elemento existe, False si el elemento no existe
+# * :Boolean True if the element exists, False if the element does not exist
 def wait_for_mobile_element(xpath, timeout = nil)
 
   result = false
@@ -730,18 +709,18 @@ def wait_for_mobile_element(xpath, timeout = nil)
 end
 
 
-#Método que espera un timeout hasta que un elemento mobile existe
+#Method that waits for a timeout until a mobile element exists
 # @params
-# * :xpath_element xpath que identifica y busca al mobile element
-# * :msg_err mensaje de error en caso de no localizar al elemento
-# * :timeout tiempo en segundos para esperar el mobile element
+# * :xpath_element xpath that identifies and searches for the mobile element
+# * :msg_err error message in case of not locating the element
+# * :timeout time in seconds to wait for the mobile element
 # @return
-# * :True si el elemento existe, EXCEPTION si el elemento no existe
+# * :True if the element exists, EXCEPTION if the element does not exist
 def assert_for_mobile_element(xpath, msg_err, timeout = nil)
 
   result = false
-  msg_error = msg_err.nil? ? "assert_for_mobile_element => No se encontro el elemento => #{xpath}"
-                            : "assert_for_mobile_element => No se encontro el elemento => #{xpath} \n'#{msg_err}'"
+  msg_error = msg_err.nil? ? "assert_for_mobile_element => Item not found => #{xpath}"
+                            : "assert_for_mobile_element => Item not found => #{xpath} \n'#{msg_err}'"
   timeout = timeout.nil? ? 1 : timeout
   start = Time.new
 
