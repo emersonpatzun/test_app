@@ -23,7 +23,7 @@ class LoginPage < Calabash::ABase
     @txt_user = "android.widget.EditText id:'txtUsuario'"
     @txt_password = "android.widget.EditText id:'txtPassword'"
     @btn_login = "android.widget.Button id:'btnLogin'"
-    @lbl_alert_title = "* id:'alertTitle'"
+     @lbl_alert_title = "* id:'alertTitle'"
     @btn_accept_alert = "* text:'Aceptar'"
   end
 
@@ -71,6 +71,17 @@ class LoginPage < Calabash::ABase
     )
   end
 
+  def val_alert_login
+    wait_for_element_exists(
+      @lbl_alert_title,
+      {
+        :timeout => 5,
+        :timeout_message => "The pop-up window was not displayed when logging in",
+      }
+    )
+    return query(@lbl_alert_title, :text)[0]
+  end
+
   def assert_alert_login_successful
     wait_for_element_exists(
         @lbl_alert_title,
@@ -79,6 +90,16 @@ class LoginPage < Calabash::ABase
             :timeout_message => "Successful Login popup was not displayed",
         }
     )
+  end
+
+  def assert_alert_login_fail
+    lbl_popup_actual = val_alert_login
+    lbl_popup_esperada = @dt_yml['lbl_pop_up_login_fail']
+
+    if lbl_popup_actual.to_s.strip != lbl_popup_esperada.to_s.strip
+      raise("Error. Current alert 'login fail' tag => #{lbl_popup_actual},
+            Etiqueta alert login esperada => #{lbl_popup_esperada}")
+    end
   end
 
 end

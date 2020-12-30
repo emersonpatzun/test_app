@@ -5,7 +5,7 @@ require_relative '../../../helpers/mate'
 #***************************************************************
 # STEPS - LOGIN PAGE
 #***************************************************************
-Then(/^the 'Login' page is displayed$/) do
+Then(/^The 'Login' page is displayed$/) do
   login_page = LoginPage.new(self)
   login_page.assert_login_page_visible
   save_evidence_execution
@@ -21,5 +21,11 @@ end
 Then(/^The 'Login Successful' popup is displayed$/) do
   login_page = LoginPage.new(self)
   login_page.assert_alert_login_successful
+  save_evidence_execution
+end
+
+Then(/^The 'Incorrect Login' popup is displayed$/) do
+  login_page = LoginPage.new(self)
+  login_page.assert_alert_login_fail
   save_evidence_execution
 end
